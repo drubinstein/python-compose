@@ -1,0 +1,14 @@
+units:
+- unit_type: "venv"
+  name: "httpd_0"
+  env_dir: "./.envs"
+  script_path: "../venv/httpd.py"
+  script_args: ["8080"]
+- unit_type: "pyenv-virtualenv"
+  name: "httpd_1"
+  py_version: "3.10"
+  script_path: "../pyenv/httpd.py"
+  script_args: ["8081"]
+- unit_type: "conda"
+  name: httpd_2
+  command: ["python3", "../conda/httpd.py", "8082"]

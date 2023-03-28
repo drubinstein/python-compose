@@ -1,0 +1,25 @@
+name: Test pyenv
+on: [push, pull_request]
+
+jobs:
+  job:
+    name: "Pytest with pyenv"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python:
+          - 3.9
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install python version
+      uses: gabrielfalcao/pyenv-action@v13
+      with:
+        default: "${{ matrix.python }}"
+        command: pip install -U pip  # upgrade pip after installing python
+    - name: Install pyenv-virtualenv
+      run: git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
+    - name: Install dependencies
+      run: pip install -e '.[test]'
+    - name: Run tests
+      run: pytest

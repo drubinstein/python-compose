@@ -1,0 +1,16 @@
+units:
+- unit_type: "venv"
+  name: "env_0"
+  env_dir: "./.envs"
+  script_path: "create_file.py"
+  script_args: ["0.txt"]
+- unit_type: "venv"
+  name: "env_1"
+  env_dir: "./.envs"
+  script_path: "create_file.py"
+  script_args: ["1.txt"]
+- unit_type: "venv"
+  name: env_2
+  env_dir: "./.envs"
+  script_path: "create_file.py"
+  script_args: ["2.txt"]
