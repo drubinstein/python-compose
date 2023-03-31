@@ -49,6 +49,7 @@ Python Compose isn't the only tool in the world for this task. It happens to be 
 | Python Multiprocessing |  Linux/MacOS/Windows  |            ❌           |      With [subprocess](https://docs.python.org/3/library/subprocess.html)     |                  ❌                  |                   ❌                  |
 |     Docker Compose     |  Linux/MacOS/Windows  |            ✅           |                                       ✅                                       |                  ✅                  |                   ✅                  |
 |   Systemd Unit Files   |         Linux         |            ❌           |                                       ✅                                       |                  ✅                  |                   ✅                  |
+|   Bazel    |         Linux/MacOS/Windows         |            ❌           |                                       ✅                                       |                  ✅                  |                   ✅                  |
 
 
 ## Example
