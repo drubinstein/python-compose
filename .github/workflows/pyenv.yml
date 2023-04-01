@@ -3,23 +3,27 @@ on: [push, pull_request]
 
 jobs:
   job:
-    name: "Pytest with pyenv"
-    runs-on: ubuntu-latest
+    name: test ${{ matrix.py }} - ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}-latest
     strategy:
       matrix:
         python:
           - 3.9
+        os:
+          - Ubuntu
+          - Windows
+          - MacOs
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Install python version
-      uses: gabrielfalcao/pyenv-action@v13
-      with:
-        default: "${{ matrix.python }}"
-        command: pip install -U pip  # upgrade pip after installing python
-    - name: Install pyenv-virtualenv
-      run: git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
-    - name: Install dependencies
-      run: pip install -e '.[test]'
-    - name: Run tests
-      run: pytest
+      - uses: actions/checkout@v3
+      - name: Install python version
+        uses: gabrielfalcao/pyenv-action@v13
+        with:
+          default: "${{ matrix.python }}"
+          command: pip3 install -U pip # upgrade pip after installing python
+      - name: Install pyenv-virtualenv
+        run: git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
+      - name: Install dependencies
+        run: pip3 install -e '.[test]'
+      - name: Run tests
+        run: python3 -m pytest

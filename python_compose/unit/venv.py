@@ -1,8 +1,10 @@
+import os
 import pathlib
+import platform
 import shutil
 import subprocess
+import venv
 from typing import List, Union
-from venv import EnvBuilder
 
 from python_compose.unit.compose_unit import ComposeUnit
 
@@ -31,31 +33,37 @@ class VenvUnit(ComposeUnit):
         self.name = name
         self.env_dir = env_dir
         self.env_path = self.env_dir / self.name
-        self.python_path = self.env_path / "bin" / "python"
+        if platform.system() == "Windows":
+            self.python_path = self.env_path / "Scripts" / "python.exe"
+        else:
+            self.python_path = self.env_path / "bin" / "python"
         self.requirements = requirements
         self.script_path = script_path
         self.script_args = script_args
 
     def create(self) -> None:
         """Function for creating a virtual environment."""
-        self.env = EnvBuilder(system_site_packages=True, clear=False, with_pip=True)
-        self.env.create(self.env_path)
+        venv.create(str(self.env_path), system_site_packages=True,
+                    clear=False, with_pip=True)
 
     def install_requirements(self) -> None:
         """Function to install any and all requirements for running a script in the virtual
         environment."""
         if isinstance(self.requirements, list) and self.requirements:
             subprocess.check_call(
-                [str(self.python_path), "-m", "pip", "install"] + self.requirements
+                [str(self.python_path), "-m", "pip",
+                 "install"] + self.requirements
             )
         elif isinstance(self.requirements, pathlib.Path):
             subprocess.check_call(
-                [str(self.python_path), "-m", "pip", "install", "-r", str(self.requirements)]
+                [str(self.python_path), "-m", "pip",
+                 "install", "-r", str(self.requirements)]
             )
 
     def start(self) -> None:
         """Function to start a script in the previously created virtual environment."""
-        p = subprocess.Popen([str(self.python_path), str(self.script_path)] + self.script_args)
+        p = subprocess.Popen([str(self.python_path), str(
+            self.script_path)] + self.script_args)
         p.communicate()
 
     def clean(self) -> None:
