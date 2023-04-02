@@ -10,8 +10,10 @@ jobs:
       matrix:
         os:
           - Ubuntu
+          - Windows
+          - MacOs
         py:
-          - "3.8"
+          - 3.8
 
     steps:
       - name: Setup python for test ${{ matrix.py }}
@@ -21,11 +23,12 @@ jobs:
       - uses: conda-incubator/setup-miniconda@v2
         with:
           auto-update-conda: true
+          auto-activate-base: false
           python-version: ${{ matrix.python-version}}
       - uses: actions/checkout@v3
       - name: Upgrade pip
-        run: python -m pip install -U pip
+        run: python3 -m pip install -U pip
       - name: Install dependencies
-        run: python -m pip install -e '.[test]'
+        run: python3 -m pip install -e '.[test]'
       - name: Run pytest
-        run: pytest
+        run: python3 -m pytest

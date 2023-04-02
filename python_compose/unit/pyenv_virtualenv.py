@@ -1,5 +1,6 @@
 import os
 import pathlib
+import platform
 import shutil
 import subprocess
 import warnings
@@ -37,32 +38,44 @@ class PyenvVirtualenvUnit(ComposeUnit):
 
     def create(self) -> None:
         """Function for creating a virtual environment."""
-        self.pyenv_root = pathlib.Path(subprocess.check_output(["pyenv", "root"]).decode().strip())
+        self.pyenv_root = pathlib.Path(
+            subprocess.check_output(["pyenv", "root"]).decode().strip())
         self.env_path = self.pyenv_root / "versions" / self.name
-        self.python_path = self.pyenv_root / "versions" / self.name / "bin" / "python"
-
-        subprocess.check_call(["pyenv", "install", self.py_version, "--skip-existing"])
-        if os.path.exists(self.env_path):
-            warnings.warn(f"Skipping pyenv venv creation for {self.name}. Venv already exists.")
+        if platform.system == "Windows":
+            self.python_path = self.pyenv_root / "versions" / \
+                self.name / "Scripts" / "python.exe"
         else:
-            subprocess.check_call(["pyenv", "virtualenv", self.py_version, self.name])
+            self.python_path = self.pyenv_root / "versions" / self.name / "bin" / "python"
+
+        subprocess.check_call(
+            ["pyenv", "install", self.py_version, "--skip-existing"])
+        if os.path.exists(self.env_path):
+            warnings.warn(
+                f"Skipping pyenv venv creation for {self.name}. Venv already exists.")
+        else:
+            subprocess.check_call(
+                ["pyenv", "virtualenv", self.py_version, self.name])
 
     def install_requirements(self) -> None:
         """Function to install any and all requirements for running a script in the virtual
         environment."""
-        subprocess.check_call([str(self.python_path), "-m", "pip", "install", "-U", "pip"])
+        subprocess.check_call(
+            [str(self.python_path), "-m", "pip", "install", "-U", "pip"])
         if isinstance(self.requirements, list) and self.requirements:
             subprocess.check_call(
-                [str(self.python_path), "-m", "pip", "install"] + self.requirements
+                [str(self.python_path), "-m", "pip",
+                 "install"] + self.requirements
             )
         elif isinstance(self.requirements, pathlib.Path):
             subprocess.check_call(
-                [str(self.python_path), "-m", "pip", "install", "-r", str(self.requirements)]
+                [str(self.python_path), "-m", "pip",
+                 "install", "-r", str(self.requirements)]
             )
 
     def start(self) -> None:
         """Function to start a script in the previously created virtual environment"""
-        p = subprocess.Popen([str(self.python_path), str(self.script_path)] + self.script_args)
+        p = subprocess.Popen([str(self.python_path), str(
+            self.script_path)] + self.script_args)
         p.communicate()
 
     def clean(self) -> None:

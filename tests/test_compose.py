@@ -1,5 +1,6 @@
 import os
 import pathlib
+import platform
 import random
 import shutil
 import string
@@ -62,7 +63,7 @@ def test_conda(tmp_path: pathlib.Path, random_string: str) -> None:
                 "test",
                 [],
                 [
-                    "python",
+                    "python3",
                     os.path.join("tests", "create_file.py"),
                     str(output_file),
                     random_string,
@@ -84,7 +85,8 @@ def test_yaml_deserialization() -> None:
 
 
 def test_pydantic_to_compose_unit() -> None:
-    units = compose.pydantic_to_units(compose.from_yaml(pathlib.Path("tests") / "config.yaml"))
+    units = compose.pydantic_to_units(
+        compose.from_yaml(pathlib.Path("tests") / "config.yaml"))
     assert len(units) == 3
     counter: Counter[str] = Counter()
     for unit in units:
