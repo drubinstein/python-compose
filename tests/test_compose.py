@@ -3,6 +3,7 @@ import pathlib
 import random
 import shutil
 import string
+import typing
 from collections import Counter
 
 import pytest
@@ -77,7 +78,7 @@ def test_conda(tmp_path: pathlib.Path, random_string: str) -> None:
 def test_yaml_deserialization() -> None:
     units = compose.from_yaml(pathlib.Path("tests") / "config.yaml")
     assert len(units) == 3
-    counter: Counter[str] = Counter()
+    counter: typing.Counter[str] = Counter()
     for unit in units:
         counter[unit.unit_type] += 1
     assert counter["venv"] == 1 and counter["pyenv-virtualenv"] == 1 and counter["conda"] == 1
@@ -86,7 +87,7 @@ def test_yaml_deserialization() -> None:
 def test_pydantic_to_compose_unit() -> None:
     units = compose.pydantic_to_units(compose.from_yaml(pathlib.Path("tests") / "config.yaml"))
     assert len(units) == 3
-    counter: Counter[str] = Counter()
+    counter: typing.Counter[str] = Counter()
     for unit in units:
         counter[type(unit).__name__] += 1
     print(counter)
