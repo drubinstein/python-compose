@@ -1,8 +1,8 @@
 import pathlib
 import shutil
 import subprocess
+import venv
 from typing import List, Union
-from venv import EnvBuilder
 
 from python_compose.unit.compose_unit import ComposeUnit
 
@@ -38,8 +38,7 @@ class VenvUnit(ComposeUnit):
 
     def create(self) -> None:
         """Function for creating a virtual environment."""
-        self.env = EnvBuilder(system_site_packages=True, clear=False, with_pip=True)
-        self.env.create(self.env_path)
+        venv.create(self.env_path, system_site_packages=True, clear=False, with_pip=True)  # type: ignore[attr-defined] # noqa
 
     def install_requirements(self) -> None:
         """Function to install any and all requirements for running a script in the virtual
