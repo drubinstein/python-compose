@@ -1,0 +1,27 @@
+name: Test formatting
+on: [push, pull_request]
+
+jobs:
+  test:
+    name: test ${{ matrix.py }} - ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - Ubuntu
+        py:
+          - "3.8"
+
+    steps:
+      - name: Setup python for test ${{ matrix.py }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.py }}
+      - uses: actions/checkout@v3
+      - name: Upgrade pip
+        run: python -m pip install -U pip
+      - name: Install dependencies
+        run: python -m pip install -e '.[dev]'
+      - name: Run pre-commit
+        run: pre-commit run --all-files
