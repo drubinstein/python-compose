@@ -12,3 +12,6 @@ units:
 - unit_type: "conda"
   name: httpd_2
   command: ["python3", "../conda/httpd.py", "8082"]
+- unit_type: "mamba"
+  name: httpd_3
+  command: ["python3", "../conda/httpd.py", "8082"]

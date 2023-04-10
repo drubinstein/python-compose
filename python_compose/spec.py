@@ -8,11 +8,9 @@ from typing_extensions import Annotated
 
 # TODO: Add classmethods to convert these to their a
 # TODO: Move models to the associated unit class
-class CondaUnitModel(BaseModel):
-    """The definition for running a Conda Unit."""
+class AnacondaUnitModelMixin(BaseModel):
+    """The definition for running an Anaconda-compatible Unit."""
 
-    unit_type: Literal["conda"]
-    """Definition that this is a conda model."""
     name: str
     """The name of the environment."""
     requirements: Union[pathlib.Path, List[str]] = []
@@ -21,6 +19,20 @@ class CondaUnitModel(BaseModel):
     """A list of strings representing the command to be run."""
     working_dir: Optional[str] = None
     """The optional working directory for the script being run."""
+
+
+class CondaUnitModel(AnacondaUnitModelMixin):
+    """The definition for running a conda Unit."""
+
+    unit_type: Literal["conda"]
+    """Definition that this is a conda model."""
+
+
+class MambaUnitModel(AnacondaUnitModelMixin):
+    """The definition for running a mamba Unit."""
+
+    unit_type: Literal["mamba"]
+    """Definition that this is a mamba model."""
 
 
 class PyenvVirtualenvUnitModel(BaseModel):
@@ -58,7 +70,7 @@ class VenvUnitModel(BaseModel):
 
 
 Unit = Annotated[
-    Union[CondaUnitModel, PyenvVirtualenvUnitModel, VenvUnitModel],
+    Union[CondaUnitModel, MambaUnitModel, PyenvVirtualenvUnitModel, VenvUnitModel],
     Field(discriminator="unit_type"),
 ]
 """The collection of Unit models that we will be able to deserialize."""

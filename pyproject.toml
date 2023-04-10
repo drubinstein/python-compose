@@ -29,6 +29,7 @@ dependencies = [
   "pydantic-yaml",
   "ruamel.yaml",
   "typing-extensions",
+  "types-PyYAML"
 ]
 
 [project.urls]
