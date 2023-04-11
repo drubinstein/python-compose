@@ -6,6 +6,7 @@ from typing import List, cast
 from python_compose.spec import Unit, YamlSpec
 from python_compose.unit.compose_unit import ComposeUnit
 from python_compose.unit.conda import CondaUnit, MambaUnit
+from python_compose.unit.poetry import PoetryUnit
 from python_compose.unit.pyenv_virtualenv import PyenvVirtualenvUnit
 from python_compose.unit.venv import VenvUnit
 
@@ -68,6 +69,8 @@ def pydantic_to_units(units: List[Unit]) -> List[ComposeUnit]:
             ret.append(CondaUnit(**kwargs))
         elif unit.unit_type == "mamba":
             ret.append(MambaUnit(**kwargs))
+        elif unit.unit_type == "poetry":
+            ret.append(PoetryUnit(**kwargs))
         elif unit.unit_type == "pyenv-virtualenv":
             ret.append(PyenvVirtualenvUnit(**kwargs))
         elif unit.unit_type == "venv":

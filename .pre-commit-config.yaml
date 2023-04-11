@@ -48,3 +48,4 @@ repos:
           - "pydantic"
           - "pydantic_yaml"
           - "pytest"
+          - "types-PyYAML"

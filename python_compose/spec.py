@@ -35,6 +35,19 @@ class MambaUnitModel(AnacondaUnitModelMixin):
     """Definition that this is a mamba model."""
 
 
+class PoetryUnitModel(BaseModel):
+    """The definition for running a poetry Unit."""
+
+    unit_type: Literal["poetry"]
+    """Definition that this is a poetry model."""
+    source_dir: str
+    """Path to the top level directory for the module using poetry."""
+    script_path: pathlib.Path
+    """The path to a Python script to run relative to source dir."""
+    script_args: List[str]
+    """Arguments to pass to script_path."""
+
+
 class PyenvVirtualenvUnitModel(BaseModel):
     """The definition for running a pyenv Unit."""
 
@@ -70,7 +83,9 @@ class VenvUnitModel(BaseModel):
 
 
 Unit = Annotated[
-    Union[CondaUnitModel, MambaUnitModel, PyenvVirtualenvUnitModel, VenvUnitModel],
+    Union[
+        CondaUnitModel, MambaUnitModel, PoetryUnitModel, PyenvVirtualenvUnitModel, VenvUnitModel
+    ],
     Field(discriminator="unit_type"),
 ]
 """The collection of Unit models that we will be able to deserialize."""
