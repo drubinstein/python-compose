@@ -17,6 +17,8 @@ jobs:
       with:
         default: "${{ matrix.python }}"
         command: pip install -U pip  # upgrade pip after installing python
+    - name: Install and configure Poetry
+      uses: snok/install-poetry@v1
     - name: Install pyenv-virtualenv
       run: git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
     - name: Install dependencies
