@@ -1,6 +1,7 @@
 import pathlib
 import shutil
 import subprocess
+import warnings
 from typing import List
 
 from python_compose.unit.compose_unit import ComposeUnit
@@ -25,19 +26,29 @@ class PoetryUnit(ComposeUnit):
         self.source_dir = source_dir
         self.script_path = script_path
         self.script_args = script_args
-        self.env_dir = subprocess.check_output(
+        self.env_dir = ""
+        try:
+            self.env_dir = self.env()
+        except subprocess.CalledProcessError:
+            warnings.warn(f"No environment has been created for {self.source_dir}")
+
+    def env(self) -> str:
+        """Get the virtual environment path for this unit."""
+        return subprocess.check_output(
             ["poetry", "env", "info", "--path"], cwd=self.source_dir
-        )
+        ).decode()
 
     def create(self) -> None:
         """Function for creating a virtual environment."""
-        # Poetry creates the virtual environments on initialization so we don't have to here.
+        # Poetry creates the virtual environments on installation so we don't have to here.
         pass
 
     def install_requirements(self) -> None:
         """Function to install any and all requirements for running a script in the virtual
         environment."""
         subprocess.check_call(["poetry", "install"], cwd=self.source_dir)
+        if not self.env_dir:
+            self.env_dir = self.env()
 
     def start(self) -> None:
         """Function to start a script in the previously created virtual environment."""
@@ -49,4 +60,5 @@ class PoetryUnit(ComposeUnit):
 
     def clean(self) -> None:
         """Function to erase any pre-existing files to: be recreated by a Python Compose Unit."""
-        shutil.rmtree(self.env_dir)
+        if self.env_dir:
+            shutil.rmtree(self.env_dir)

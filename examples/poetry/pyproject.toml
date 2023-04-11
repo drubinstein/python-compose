@@ -6,7 +6,7 @@ readme = "README.md"
 authors = ["A <A@A.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.8"
 
 
 [build-system]
