@@ -35,7 +35,11 @@ dependencies = [
 [project.urls]
 
 [project.optional-dependencies]
+poetry = [
+  "poetry",
+]
 test = [
+  "python-compose[poetry]",
   "pytest",
 ]
 dev = [

@@ -14,4 +14,9 @@ units:
   command: ["python3", "../conda/httpd.py", "8082"]
 - unit_type: "mamba"
   name: httpd_3
-  command: ["python3", "../conda/httpd.py", "8082"]
+  command: ["python3", "../conda/httpd.py", "8083"]
+- unit_type: "poetry"
+  name: httpd_4
+  source_dir: "examples/poetry"
+  script_path: "example/httpd.py"
+  script_args: ["8084"]

@@ -12,12 +12,12 @@ Python Compose is a command line tool and library for spinning up many long-runn
 Currently, Python Compose supports the following environments:
 - [conda](https://docs.conda.io/en/latest/)
 - [mamba](https://mamba.readthedocs.io/en/latest/index.html)
+- [poetry](https://python-poetry.org/)
 - [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv)
 - [venv](https://docs.python.org/3/library/venv.html)
 
 In the future, we wish to support:
 
-- [poetry](https://python-poetry.org/)
 - [pipenv](https://pipenv.pypa.io/en/latest/)
 - [pyenv](https://github.com/pyenv/pyenv)
 
