@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "python-compose"
-version = "1.1.0"
+version = "1.2.0"
 description = "Python Compose, a tool for spinning up many long-running Python services simultaneously."
 readme = "README.md"
 requires-python = ">=3.8"
