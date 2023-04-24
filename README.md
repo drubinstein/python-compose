@@ -44,13 +44,13 @@ Python Compile can currently only be instantiated from a YAML file with specific
 
 Python Compose isn't the only tool in the world for this task. It happens to be a convenient one if you're working in a Python only environment and want to minimize external tools and dependencies. Below is a chart comparing Python Compose versus other solutions.
 
-|        **Tool**        | **Operating Systems** | **Virtual Networking** |                **Ability to Run Non-Python Programs**                | **Multiple Python Version Support** | **Non-Python Dependencies Required** |
+|        **Tool**        | **Operating Systems** | **Virtual Networking** |                **Ability to Run Non-Python Programs**                | **Multiple Python Version Support** | **Only Python Dependencies Required** |
 |:----------------------:|:---------------------:|:----------------------:|:-----------------------------------------------------------------------------:|:-----------------------------------:|:------------------------------------:|
-|     Python Compose     |  Linux/MacOS  |            ❌           | With Conda or [subprocess](https://docs.python.org/3/library/subprocess.html) |                  ✅                  |                   ❌                  |
-| Python Multiprocessing |  Linux/MacOS/Windows  |            ❌           |      With [subprocess](https://docs.python.org/3/library/subprocess.html)     |                  ❌                  |                   ❌                  |
-|     Docker Compose     |  Linux/MacOS/Windows  |            ✅           |                                       ✅                                       |                  ✅                  |                   ✅                  |
-|   Systemd Unit Files   |         Linux         |            ❌           |                                       ✅                                       |                  ✅                  |                   ✅                  |
-|   Bazel    |         Linux/MacOS/Windows         |            ❌           |                                       ✅                                       |                  ✅                  |                   ✅                  |
+|     Python Compose     |  Linux/MacOS  |            ❌           | With Conda or [subprocess](https://docs.python.org/3/library/subprocess.html) |                  ✅                  |                   ✅                  |
+| Python Multiprocessing |  Linux/MacOS/Windows  |            ❌           |      With [subprocess](https://docs.python.org/3/library/subprocess.html)     |                  ❌                  |                   ✅                  |
+|     Docker Compose     |  Linux/MacOS/Windows  |            ✅           |                                       ✅                                       |                  ✅                  |                    ❌                |
+|   Systemd Unit Files   |         Linux         |            ❌           |                                       ✅                                       |                  ✅                  |                   ❌                  |
+|   Bazel    |         Linux/MacOS/Windows         |            ❌           |                                       ✅                                       |                  ✅                  |                   ❌                  |
 
 
 ## Example
